@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import login
 from .models import Book
 from .models import Library
 
@@ -16,7 +16,7 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-class LoginView(auth_views.LoginView):
+class login(login):
     template_name='authentication/login.html'
 
 
