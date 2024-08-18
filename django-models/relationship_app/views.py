@@ -19,11 +19,6 @@ class LibraryDetailView(DetailView):
 class login(login):
     template_name='authentication/login.html'
 
-
-class LogoutView(auth_views.LogoutView):
-    template_name='authentication/logout.html'
-
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
