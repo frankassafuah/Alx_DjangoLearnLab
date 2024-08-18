@@ -16,9 +16,6 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-class login(login):
-    template_name='authentication/login.html'
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -29,4 +26,4 @@ def register(request):
     else:
         form = UserCreationForm()
 
-    return render(request, 'authentication/register.html', {'form': form})
+    return render(request, 'relationship_app/register.html', {'form': form})
