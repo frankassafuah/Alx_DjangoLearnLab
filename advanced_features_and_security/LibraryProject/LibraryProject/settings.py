@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -125,3 +126,28 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Disable DEBUG mode in production
+DEBUG = False
+
+# Secure cookies by ensuring they are only sent over HTTPS
+CSRF_COOKIE_SECURE = True
+
+SESSION_COOKIE_SECURE = True
+
+# Prevent XSS attacks
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent the site from being embedded in an iframe
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevent the browser from interpreting files as something else, reducing XSS risks
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Ensure that secure SSL redirect is enabled in production
+SECURE_SSL_REDIRECT = True
+
+# Add a Content Security Policy (CSP) for additional protection
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
+CSP_SCRIPT_SRC = ("'self'", 'https://cdnjs.cloudflare.com')
+

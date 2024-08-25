@@ -1,6 +1,27 @@
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, get_object_or_404
 from .models import Book
+from .forms import SearchForm
+
+from django.http import HttpResponse
+from django.views.decorators.clickjacking import xframe_options_deny
+
+@xframe_options_deny
+def my_view(request):
+    response = HttpResponse("Content with CSP header")
+    response['Content-Security-Policy'] = "default-src 'self';"
+    return response
+
+
+def search_books(request):
+    form = SearchForm(request.GET)
+    if form.is_valid():
+        query = form.cleaned_data.get('query')
+        books = Book.objects.filter(title__icontains=query)
+    else:
+        books = Book.objects.none()
+    return render(request, 'bookshelf/book_list.html', {'books': books, 'form': form})
+
 
 # Define the book_list view
 @permission_required('bookshelf.can_view', raise_exception=True)
