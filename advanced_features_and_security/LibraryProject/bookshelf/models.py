@@ -8,6 +8,18 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publication_year = models.IntegerField(default=2024)
 
+
+    class Meta:
+        permissions = [
+            ('can_view', 'Can view book'),
+            ('can_create', 'Can create book'),
+            ('can_edit', 'Can edit book'),
+            ('can_delete', 'Can delete book'),
+        ]
+
+    def __str__(self):
+        return self.title
+
 class CustomUser(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
