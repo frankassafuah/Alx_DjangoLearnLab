@@ -167,3 +167,5 @@ CSRF_COOKIE_SECURE = True
 # Clickjacking protection
 X_FRAME_OPTIONS = 'DENY'
 
+# Instruct Django to trust the X-Forwarded-Proto header to determine if the request is secure
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
