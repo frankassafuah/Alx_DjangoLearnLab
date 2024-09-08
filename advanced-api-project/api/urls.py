@@ -10,6 +10,9 @@ urlpatterns = [
     # URL for retrieving a specific book by its ID
     path('books/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
 
+    # URL for creating a new book
+    path('books/create/', BookListView.as_view(), name='book-create'),
+
     # URL for updating a specific book by its ID
     path('books/<int:pk>/update/', BookUpdateView.as_view(), name='book-update'),
 
