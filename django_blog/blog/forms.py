@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Comment
 from .models import Post
 from taggit.forms import TagField
+from taggit.forms import TagWidget
+
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -14,12 +16,14 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class PostForm(forms.ModelForm):
-    tags = TagField()  # Add this field for tags
+    tags = TagField()  # Include this field for adding/editing tags
 
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
-
+        widgets = {
+            'tags': TagWidget(),  # Apply TagWidget to the tags field
+        }
 
 class CommentForm(forms.ModelForm):
     class Meta:
