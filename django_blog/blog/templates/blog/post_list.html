@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>All Posts</h2>
+    {% for post in posts %}
+        <div>
+            <h3><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h3>
+            <p>{{ post.content|slice:":200" }}...</p>
+            <p>Author: {{ post.author.username }} | Created at: {{ post.created_at }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
