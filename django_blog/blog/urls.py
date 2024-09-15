@@ -4,6 +4,7 @@ from .views import register, profile
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, PostsByTagView
 from .views import CommentCreateView, CommentUpdateView, CommentDeleteView
 from .views import search
+from .views import PostByTagListView
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='blog/login.html'), name='login'),
@@ -20,4 +21,5 @@ urlpatterns = [
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
     path('search/', search, name='search'),
     path('tags/<slug:tag_slug>/', PostsByTagView.as_view(), name='posts-by-tag'),
+    path('tags/<str:tag>/', PostByTagListView.as_view(), name='posts_by_tag'),
 ]

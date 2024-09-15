@@ -155,3 +155,13 @@ class PostsByTagView(ListView):
         context = super().get_context_data(**kwargs)
         context['tag'] = get_object_or_404(Tag, slug=self.kwargs['tag_slug'])
         return context
+    
+
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/post_list_by_tag.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag = self.kwargs.get('tag')
+        return Post.objects.filter(tags__name__icontains=tag)
