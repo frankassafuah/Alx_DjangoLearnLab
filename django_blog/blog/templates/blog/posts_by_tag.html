@@ -1,0 +1,9 @@
+<!-- posts_by_tag.html -->
+<h2>Posts tagged with "{{ tag.name }}"</h2>
+
+{% for post in posts %}
+    <div>
+        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+        <p>{{ post.content|truncatewords:20 }}</p>
+    </div>
+{% endfor %}
