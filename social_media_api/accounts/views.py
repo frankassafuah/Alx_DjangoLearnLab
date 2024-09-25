@@ -1,6 +1,5 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from django.contrib.auth import authenticate
@@ -12,7 +11,7 @@ from .models import CustomUser  # Assuming CustomUser is your user model
 from .serializers import UserSerializer  # Assuming you have a serializer for CustomUser
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions 
 
 
 class RegisterView(APIView):
@@ -43,7 +42,7 @@ class LoginView(APIView):
 
 # View to follow a user
 class FollowUserView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]  # User must be authenticated
+    permission_classes = [permissions.IsAuthenticated]  # User must be authenticated
     queryset = CustomUser.objects.all()  # Access to all users
     serializer_class = UserSerializer
 
@@ -58,7 +57,7 @@ class FollowUserView(generics.GenericAPIView):
 
 # View to unfollow a user
 class UnfollowUserView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]  # User must be authenticated
+    permission_classes = [permissions.IsAuthenticated]  # User must be authenticated
     queryset = CustomUser.objects.all()  # Access to all users
     serializer_class = UserSerializer
 
