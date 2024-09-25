@@ -53,3 +53,35 @@ class UserFeedView(generics.ListAPIView):
         return Post.objects.filter(author__in=following_users).order_by('-created_at')  # Ensure 'created_at' is the timestamp field in your Post model
 
 
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .models import Post, Like
+from notifications.models import Notification
+
+class LikeViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def like_post(self, request, pk=None):
+        post = Post.objects.get(pk=pk)
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
+
+        if created:
+            # Create a notification
+            Notification.objects.create(
+                recipient=post.author,
+                actor=request.user,
+                verb='liked',
+                target=post
+            )
+            return Response({'status': 'liked'}, status=status.HTTP_201_CREATED)
+        return Response({'status': 'already liked'}, status=status.HTTP_400_BAD_REQUEST)
+
+    def unlike_post(self, request, pk=None):
+        post = Post.objects.get(pk=pk)
+        try:
+            like = Like.objects.get(user=request.user, post=post)
+            like.delete()
+            return Response({'status': 'unliked'}, status=status.HTTP_204_NO_CONTENT)
+        except Like.DoesNotExist:
+            return Response({'status': 'not liked'}, status=status.HTTP_400_BAD_REQUEST)
