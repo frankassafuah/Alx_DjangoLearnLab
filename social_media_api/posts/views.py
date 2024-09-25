@@ -1,12 +1,12 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 from .models import Post, Like
 from notifications.models import Notification
 
 class LikeViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def like_post(self, request, pk=None):
         # Fetch the post object safely using get_object_or_404
