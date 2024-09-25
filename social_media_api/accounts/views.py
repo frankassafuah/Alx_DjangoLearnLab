@@ -47,7 +47,7 @@ from rest_framework import status
 from .models import CustomUser  # Adjust based on your User model
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated])
 def follow_user(request, user_id):
     try:
         user_to_follow = CustomUser.objects.get(id=user_id)
@@ -57,7 +57,7 @@ def follow_user(request, user_id):
         return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated])
 def unfollow_user(request, user_id):
     try:
         user_to_unfollow = CustomUser.objects.get(id=user_id)
