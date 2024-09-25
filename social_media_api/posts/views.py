@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import permissions
-from django.shortcuts import get_object_or_404
+from rest_framework import generics
 from .models import Post, Like
 from notifications.models import Notification
 
@@ -10,7 +10,7 @@ class LikeViewSet(viewsets.ViewSet):
 
     def like_post(self, request, pk=None):
         # Fetch the post object safely using get_object_or_404
-        post = get_object_or_404(Post, pk=pk)
+        post = generics.get_object_or_404(Post, pk=pk)
 
         # Create or retrieve the Like object
         like, created = Like.objects.get_or_create(user=request.user, post=post)
@@ -29,7 +29,7 @@ class LikeViewSet(viewsets.ViewSet):
 
     def unlike_post(self, request, pk=None):
         # Fetch the post object safely using get_object_or_404
-        post = get_object_or_404(Post, pk=pk)
+        post = generics.get_object_or_404(Post, pk=pk)
 
         try:
             # Attempt to retrieve the Like object
